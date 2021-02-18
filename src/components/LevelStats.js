@@ -55,6 +55,12 @@ class LevelStats extends Component {
 
                         <div className="col-xl-12" >
 
+                            <p style={{ color: "white", fontSize: "17px", float: "left" }}>Directs Count (To increase ROI) </p>
+                            <p style={{ color: "white", fontSize: "17px", float: "right", fontFamily: "MyFont" }}>
+                                # {this.props.temp_directs_count}  </p>
+
+                            <br /><br />
+
                             <p style={{ color: "white", fontSize: "17px", float: "left" }}>Level 1 </p>
                             <p style={{ color: "white", fontSize: "17px", float: "right", fontFamily: "MyFont" }}>
                                 {this.props.level1} TRX</p>

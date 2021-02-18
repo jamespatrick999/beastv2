@@ -98,9 +98,15 @@ class Withdraw extends Component {
         const now = await Utils.contract.getNow().call();
         this.setState({ now: Number(now) });
 
+        const paySecs = await Utils.contract.getPaySecs().call();
+        this.setState({ paySecs: Number(paySecs) });
+
         const userInfo1 = await Utils.contract.userInfo(this.state.account).call();
         this.setState({ deposit_time1: Number(userInfo1.deposit_time) });
         this.setState({ payout_time1: Number(userInfo1.payout_time) });
+
+        const roi1 = await Utils.contract.getROI(this.state.account).call();
+        this.setState({ roi: Number((roi1.roi) / 1000000).toFixed(6) });
 
         const userInfo2 = await Utils.contract.userInfo2(this.state.account).call();
 
@@ -131,7 +137,7 @@ class Withdraw extends Component {
 
         // console.log("payout window " + this.state.payout_time1);
 
-        const remaining_time1 = this.state.deposit_time1 + this.state.payout_time1 - this.state.now;
+        const remaining_time1 = this.state.payout_time1 - this.state.paySecs;
 
         var draw_hrs = 0;
         var draw_mins = 0;
@@ -163,6 +169,7 @@ class Withdraw extends Component {
         this.setState({ draw_hrs });
         this.setState({ draw_mins });
         this.setState({ draw_secs });
+        console.log("pay secs " + this.state.paySecs)
 
     }
 
@@ -195,13 +202,13 @@ class Withdraw extends Component {
             borderRadius: "50%",
             display: "inline-block",
         };
-        const dotStyle2 = {
-            height: "20px",
-            width: "20px",
-            backgroundColor: "#23ACCD",
-            borderRadius: "50%",
-            display: "inline-block",
-        };
+        // const dotStyle2 = {
+        //     height: "20px",
+        //     width: "20px",
+        //     backgroundColor: "#23ACCD",
+        //     borderRadius: "50%",
+        //     display: "inline-block",
+        // };
         const dotStyle3 = {
             height: "20px",
             width: "20px",
@@ -228,7 +235,7 @@ class Withdraw extends Component {
                         <div className="col-xl-12" style={headerStyle}>
                             Total ROI</div>
                         <br />
-                        <div style={{ color: "white", fontSize: "29px", fontFamily: "MyFont", textAlign: "center" }}>{this.state.balNow} TRX
+                        <div style={{ color: "white", fontSize: "29px", fontFamily: "MyFont", textAlign: "center" }}>{this.state.roi} TRX
 
                         </div>
 
@@ -238,21 +245,14 @@ class Withdraw extends Component {
                             <span style={dotStyle1}>
 
                             </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>30 % locked for Re-Investment</p>
-
-                        </div>
-                        <div className="row container">
-                            <span style={dotStyle2}>
-
-                            </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>{(this.props.my_tbt_offer)} % to TBT offering</p>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>15 % goes to TBT offering</p>
 
                         </div>
                         <div className="row container">
                             <span style={dotStyle3}>
 
                             </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>{(100 - 30 - this.props.my_tbt_offer).toFixed(2)} % withdrawable</p>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> 85 % withdrawable</p>
 
                         </div>
                         <br />
@@ -269,7 +269,7 @@ class Withdraw extends Component {
                         >
 
                             <br />
-                            {this.state.counter === 0 ?
+                            {this.state.next_draw_time === 0 ?
                                 <button type="submit" className="btn btn-success" style={investButton}>Withdraw</button> : null}
 
 

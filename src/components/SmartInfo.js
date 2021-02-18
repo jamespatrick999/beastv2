@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 
-const contract_address = 'TTRX6WPpHfV3xDsk1B4Yxo6Ex3aUjsu4vh';
-// const tbt_address = 'TJEDMQLLkGC3frpSnEhJes8fTWHPpQ5C6P';
+const contract_address = 'TGpEDDF975B94dZygGAA7zxHTZuj8W3KK5';
+// const tbt_address = 'TUHtbVaTPxLDVqDzjWxkHWZhcmJDK3RvVf';
 
-let contract_url = "https://tronscan.org/#/contract/" + contract_address;
+let contract_url = "https://shasta.tronscan.org/#/contract/" + contract_address;
 
 export class SmartInfo extends Component {
 
@@ -29,15 +29,33 @@ export class SmartInfo extends Component {
 
                         <div className="col-xl-12" style={{ textAlign: "center" }}>
 
+                            <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>Contract Status</p>
+                            <a href="#1" style={{ color: "#18E55F", fontSize: "27px", textAlign: "center" }}> {this.props.contract_status === false ? "INACTIVE" : "ACTIVE"}  </a>
+                            <br /><br />
+
                             <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>Contract Address</p>
 
                             <a href={contract_url} style={{ textDecoration: "underline", color: "#18E55F", fontSize: "23px", textAlign: "center", paddingTop: "110px" }} target="_blank" rel="noopener noreferrer">{this.props.subContract}...</a>
                             <br /><br />
 
-
-
                             <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>Total Deposits</p>
                             <a href="#1" style={{ color: "#18E55F", fontSize: "27px", textAlign: "center" }}> {this.props.totalInvested} TRX</a>
+                            <br /><br />
+
+                            <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>Present Balance</p>
+                            <a href="#1" style={{ color: "#18E55F", fontSize: "27px", textAlign: "center" }}> {this.props.contractBalance} TRX</a>
+                            <br /><br />
+
+                            <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>HCB Value</p>
+                            <a href="#1" style={{ color: "#18E55F", fontSize: "27px", textAlign: "center" }}> {this.props.HCB} TRX</a>
+                            <br /><br />
+
+                            <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>ROI drops to 50% if contract balance drops below </p>
+                            <a href="#1" style={{ color: "#18E55F", fontSize: "27px", textAlign: "center" }}> {this.props.LowerHCB} TRX</a>
+                            <br /><br />
+
+                            <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>Higher HCB Value</p>
+                            <a href="#1" style={{ color: "#18E55F", fontSize: "27px", textAlign: "center" }}> {this.props.HigherHCB} TRX</a>
                             <br /><br />
 
                             <p style={{ color: "white", fontSize: "17px", textAlign: "center" }}>TBT claimed by Users </p>

@@ -120,46 +120,48 @@ export class Invest extends Component {
                         <div className="col-xl-12" style={headerStyle}>
                             Beasting Starts here</div>
                         <br />
+
+                        <div><p style={{ color: "white", textAlign: "center", fontSize: "19px" }}> <span>Maximum Deposits allowed per cycle</span> </p></div><br />
+                        <div className="row container">
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> <span>Cycle 1: <span style={{ color: "orange" }}>{this.props.cycle1} TRX</span> </span> </p>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> <span>Cycle 2: <span style={{ color: "orange" }}>{this.props.cycle2} TRX</span> </span> </p>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> <span>Cycle 3: <span style={{ color: "orange" }}>{this.props.cycle3} TRX</span> </span> </p>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> <span>Cycle 4: <span style={{ color: "orange" }}>{this.props.cycle4} TRX</span> </span> </p>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> <span>Cycle 5 and above: <span style={{ color: "orange" }}>{this.props.cycle5} TRX</span> </span> </p>
+
+
+                        </div>
+                        <br />
                         <div className="row container">
                             <span style={dotStyle1}>
 
                             </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>Investor : <span style={{ color: "yellow" }}> {this.props.pack1 + this.props.pack1} TRX to {this.props.pack2} TRX </span><br />(200 % ROI)</p>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> <span>Minimum Deposit is {this.props.min_deposit} TRX </span><br />(300 % ROI)</p>
 
                         </div>
-                        <div className="row container">
-                            <span style={dotStyle1}>
 
-                            </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>Business Financier : <span style={{ color: "yellow" }}> {this.props.pack2 + this.props.pack1} TRX to {this.props.pack3} TRX </span><br />(250 % ROI)</p>
-
-                        </div>
-                        <div className="row container">
-                            <span style={dotStyle1}>
-
-                            </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>Shark Investor : <span style={{ color: "yellow" }}> {this.props.pack3 + this.props.pack1} TRX to {this.props.pack4} TRX </span><br />(300 % ROI)</p>
-
-                        </div>
-                        <div className="row container">
-                            <span style={dotStyle1}>
-
-                            </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>Tycoon Investor : <span style={{ color: "yellow" }}> {this.props.pack4 + this.props.pack1} TRX to {this.props.pack5} TRX </span><br />(350 % ROI)</p>
-
-                        </div>
-                        <div className="row container">
-                            <span style={dotStyle1}>
-
-                            </span>
-                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}>Beast Investor : <span style={{ color: "yellow" }}> {this.props.pack5 + this.props.pack1} TRX and above </span><br />(400 % ROI)</p>
-
-                        </div>
                         <div className="row container">
                             <span style={dotStyle1}>
 
                             </span>
                             <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> Min Investment for receiving TBT is <br /><span style={{ color: "yellow" }}>{this.props.tbt_min_deposit} TRX (<span style={{ color: "white" }}> priced @ of {this.props.tbt_price} TRX / TBT</span> )</span>
+                            </p>
+
+                        </div>
+                        <div className="row container">
+                            <span style={dotStyle1}>
+
+                            </span>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> Min Investment for 24 Hours Withdrawal <br /><span style={{ color: "yellow" }}>{this.props.t4_value} TRX </span>
+                            </p>
+
+                        </div>
+
+                        <div className="row container">
+                            <span style={dotStyle1}>
+
+                            </span>
+                            <p style={{ color: "white", paddingLeft: "10px", fontSize: "15px" }}> Present Daily ROI range<br /><span style={{ color: "yellow" }}>{this.props.six_percent}% to {this.props.fifteen_percent}% </span>
                             </p>
 
                         </div>
@@ -173,7 +175,7 @@ export class Invest extends Component {
                                 const balance = this.props.balance;
                                 if (amount < balance) {
                                     if (amount + 15 <= balance) {
-                                        if (amount >= 2 * this.props.pack1) {
+                                        if (amount >= this.props.min_deposit) {
                                             this.invest(refid, amount);
 
                                         } else {
@@ -230,7 +232,7 @@ export class Invest extends Component {
                 </div>
 
 
-            </div>
+            </div >
         )
     }
 }

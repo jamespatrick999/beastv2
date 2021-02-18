@@ -2,6 +2,7 @@ import React from "react";
 import Top from "./TopPage";
 import { Route, BrowserRouter } from "react-router-dom";
 import Param from "./Param";
+import Param2 from "./Param2";
 
 class App extends React.Component {
 
@@ -12,8 +13,8 @@ class App extends React.Component {
         <div>
           <BrowserRouter>
             <Route exact path='/' component={Top} />
-            <Route path='/MrBeast/:id' component={Param} />
-            {/* <Route path='/view/:id' component={Param2} /> */}
+            <Route path='/Testv1/:id' component={Param} />
+            <Route path='/view/:id' component={Param2} />
           </BrowserRouter>
         </div>
 

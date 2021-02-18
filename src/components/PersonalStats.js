@@ -3,7 +3,7 @@ import Utils from '../utils';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-let addressTronScan = "https://tronscan.org/#/address/";
+let addressTronScan = "https://shasta.tronscan.org/#/address/";
 
 toast.configure();
 
@@ -59,7 +59,7 @@ class PersonalStats extends Component {
 
                             <p style={{ color: "white", fontSize: "17px", float: "left" }}>Status</p>
                             <p style={{ color: "white", fontSize: "17px", float: "right", fontFamily: "MyFont" }}>
-                                {this.props.user_status === 0 ? "In Active" : "Active"} </p>
+                                {this.props.user_status === false ? "In Active" : "Active"} </p>
 
                             <br /><br />
 
@@ -81,6 +81,10 @@ class PersonalStats extends Component {
 
                             <p style={{ color: "white", fontSize: "17px", float: "left" }}>Present Deposit </p>
                             <p style={{ color: "white", fontSize: "17px", float: "right" }}> {this.props.deposit_amount} TRX</p>
+                            <br /><br />
+
+                            <p style={{ color: "white", fontSize: "17px", float: "left" }}>Daily ROI</p>
+                            <p style={{ color: "white", fontSize: "17px", float: "right" }}> {this.props.daily_roi} %</p>
                             <br /><br />
 
                             <p style={{ color: "white", fontSize: "17px", float: "left" }}>Affiliate Bonus</p>

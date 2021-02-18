@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-let url = "https://tronbeast.live/MrBeast/";
+let url = "https://tronbeast.live/Testv1/";
 
 export class ReferralLink extends Component {
 

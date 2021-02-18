@@ -15,8 +15,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import "./css/style.css";
 
 let url = "https://tronbeast.live/"; // https://tronbeast.live/
-let contract_address = 'TTRX6WPpHfV3xDsk1B4Yxo6Ex3aUjsu4vh';
-let tbt_address = 'TJEDMQLLkGC3frpSnEhJes8fTWHPpQ5C6P';
+let contract_address = 'TGpEDDF975B94dZygGAA7zxHTZuj8W3KK5';
+let tbt_address = 'TUHtbVaTPxLDVqDzjWxkHWZhcmJDK3RvVf';
 let owner = 'TRBrNmrmX1T4BoUodhWwChRrad1sd5fus5';
 
 
@@ -138,26 +138,32 @@ class TopPage extends Component {
         var totalInvested = await Utils.contract.total_deposited().call();
         this.setState({ totalInvested: Number(totalInvested) / sunny });
 
+        var twenty_four_hours_deposit_value = await Utils.contract.twenty_four_hours_deposit_value().call();
+        this.setState({ t4_value: Number(twenty_four_hours_deposit_value) / sunny });
+
+        var min_deposit = await Utils.contract.min_deposit().call();
+        this.setState({ min_deposit: Number(min_deposit) / sunny });
+
+        var HCB = await Utils.contract.H_C_B().call();
+        this.setState({ HCB: Number(HCB) / sunny });
+
+        var LowerHCB = await Utils.contract.Lower_H_C_B().call();
+        this.setState({ LowerHCB: Number(LowerHCB) / sunny });
+
+        var HigherHCB = await Utils.contract.Higher_H_C_B().call();
+        this.setState({ HigherHCB: Number(HigherHCB) / sunny });
+
+        // var contract_status = await Utils.contract.contract_status().call();
+        // this.setState({ contract_status });
+
+
         var total_tbt_sent = await Utils.contract.total_tbt_sent().call();
         this.setState({ total_tbt_sent: Number(total_tbt_sent) / sunny });
 
         var tbt_price = await Utils.contract.tbt_price().call();
 
-        var tenk_users = await Utils.contract.tenk_users().call();
-        this.setState({ tenk_users: Number(tenk_users) });
         this.setState({ tbt_price: Number(tbt_price) / sunny });
-        //     console.log("users " + this.state.totalUsers + " tenkusers " + this.state.tenk_users);
-
-        // if (
-        //     totalUsers <= tenk_users) {
-        //     this.setState({ tbt_price: Number(tbt_price) / sunny });
-        //     console.log("1users " + this.state.totalUsers + " tenkusers " + this.state.tenk_users);
-
-        // } else {
-        //     this.setState({ tbt_price: Number(2 * tbt_price) / sunny });
-        //     console.log("2users " + this.state.totalUsers + " tenkusers " + this.state.tenk_users);
-
-        // }
+        // console.log(this.state.tbt_price)
 
         this.setState({ totalPaid: Number(this.state.totalInvested - this.state.contractBalance).toFixed(1) });
 
@@ -195,39 +201,32 @@ class TopPage extends Component {
         this.setState({ deposit_amount: Number(userInfo.deposit_amount) / sunny });
         this.setState({ payouts: Number(userInfo.payouts) / sunny });
         this.setState({ deposit_time: Number(userInfo.deposit_time) });
-        this.setState({ user_status: Number(userInfo.user_status) });
+        this.setState({ user_status: userInfo.user_status });
         this.setState({ payout_time: Number(userInfo.payout_time) });
+
+        var contract_status = await Utils.contract.contract_status().call();
+        this.setState({ contract_status });
 
         /////////////////////////////////////////////////////////////////////////////
         const userInfo2 = await Utils.contract.userInfo2(this.state.account).call();
-        // // console.log(userInfo); 
+        console.log(this.state.deposit_amount);
 
-        this.setState({ next_min_deposit: Number(userInfo2.next_deposit1) / sunny });
-        this.setState({ max_payout: Number(userInfo2.max_payout1) / sunny });
-        this.setState({ tbt_offer: Number(userInfo2.tbt_offer1) / sunny });
         this.setState({ temp_directs_count: Number(userInfo2.temp_directs_count) });
-        this.setState({ locked_balance: Number(userInfo2.locked_balance1) / sunny });
-        this.setState({ isReentry: userInfo2.isReentry })
-        /////////////////////////////////////////////////////////////////////////////
-        console.log("locked bal " + this.state.locked_balance);
+        this.setState({ daily_roi: Number(userInfo2.daily_roi / 10) });
 
-        const packInfo = await Utils.contract.packInfo(this.state.account).call();
+        var fifteen_percent = await Utils.contract.fifteen_percent().call();
+        this.setState({ fifteen_percent: Number(fifteen_percent) / 10 });
 
-        this.setState({ pack1: Number(packInfo.pack1) / sunny });
-        this.setState({ pack2: Number(packInfo.pack2) / sunny });
-        this.setState({ pack3: Number(packInfo.pack3) / sunny });
-        this.setState({ pack4: Number(packInfo.pack4) / sunny });
-        this.setState({ pack5: Number(packInfo.pack5) / sunny });
-        this.setState({ userpack: Number(packInfo.userpack) / sunny });
+        var six_percent = await Utils.contract.six_percent().call();
+        this.setState({ six_percent: Number(six_percent) / 10 });
 
-        const roiInfo = await Utils.contract.roiInfo(this.state.account).call();
+        if (this.state.contract_status === false) {
+            this.setState({ daily_roi: this.state.daily_roi / 2 });
+            this.setState({ six_percent: this.state.six_percent / 2 });
+            this.setState({ fifteen_percent: this.state.fifteen_percent / 2 });
+        }
 
-        this.setState({ roi1: Number(roiInfo.roi1) });
-        this.setState({ roi2: Number(roiInfo.roi2) });
-        this.setState({ roi3: Number(roiInfo.roi3) });
-        this.setState({ roi4: Number(roiInfo.roi4) });
-        this.setState({ roi5: Number(roiInfo.roi5) });
-        this.setState({ userroi: Number(roiInfo.userroi) });
+        ///////////////////////////////////////////////////////////////////////////// 
 
         const levelInfo = await Utils.contract.levelInfo(this.state.account).call();
 
@@ -235,12 +234,17 @@ class TopPage extends Component {
         this.setState({ level2: Number(levelInfo.level2) / sunny });
         this.setState({ level3: Number(levelInfo.level3) / sunny });
 
-        const tbtOfferInfo = await Utils.contract.tbtOfferInfo(this.state.account).call();
+        const cycleInfo = await Utils.contract.cycleInfo().call();
 
-        this.setState({ my_tbt_offer: Number(tbtOfferInfo.usertbtoffer) });
+        this.setState({ cycle1: Number(cycleInfo.cycle1) / sunny });
+        this.setState({ cycle2: Number(cycleInfo.cycle2) / sunny });
+        this.setState({ cycle3: Number(cycleInfo.cycle3) / sunny });
+        this.setState({ cycle4: Number(cycleInfo.cycle4) / sunny });
+        this.setState({ cycle5: Number(cycleInfo.cycle5) / sunny });
 
         /////////////////////////////////////////////////////////////////////////////
         const tbtInfo = await Utils.contract.tbtInfo(this.state.account).call();
+        // console.log(tbtInfo)
 
         this.setState({
             from_deposit: Number(tbtInfo.from_deposit) / sunny
@@ -263,11 +267,10 @@ class TopPage extends Component {
 
         const now = await Utils.contract.getNow().call();
         this.setState({ now: Number(now) });
+        // console.log("cycle 1 " + this.state.tbt_min_deposit);
 
-        const my_tbt_offer1 = (0.7 * this.state.my_tbt_offer).toFixed(2)
-        this.setState({ my_tbt_offer1 });
-        // console.log("tbt min deposit " + this.state.tbt_min_deposit);
     }
+
     constructor(props) {
         super(props)
 
@@ -315,27 +318,33 @@ class TopPage extends Component {
                     <hr />
                     <hr />
                     <div style={{ textAlign: "center" }}>
-                        <a href={url} >  <img src={require("./Image1/logo_tronBeast2.png")} alt="Logo" width="460px" /></a>
+                        <a href={url} >  <img src={require("./Image1/reallogo.png")} alt="Logo" width="360px" /></a>
                     </div>
 
-                    {this.state.user_status === 0 && this.state.referPresent === true ?
+                    {this.state.user_status === true ?
+                        <Withdraw
+
+                        /> : null}
+
+                    {this.state.user_status === false && (this.state.referPresent === true || this.state.deposit_amount > 0) ?
                         <Invest
-                            next_min_deposit={this.state.next_min_deposit}
                             balance={this.state.balance}
-                            pack1={this.state.pack1}
-                            pack2={this.state.pack2}
-                            pack3={this.state.pack3}
-                            pack4={this.state.pack4}
-                            pack5={this.state.pack5}
+                            min_deposit={this.state.min_deposit}
+                            t4_value={this.state.t4_value}
+                            cycle1={this.state.cycle1}
+                            cycle2={this.state.cycle2}
+                            cycle3={this.state.cycle3}
+                            cycle4={this.state.cycle4}
+                            cycle5={this.state.cycle5}
+
                             refLoading={this.state.refLoading}
                             tbt_price={this.state.tbt_price}
                             refid={this.state.refid}
+                            six_percent={this.state.six_percent}
+                            fifteen_percent={this.state.fifteen_percent}
                             deposit_amount={this.state.deposit_amount}
                             user_status={this.state.user_status}
                             tbt_min_deposit={this.state.tbt_min_deposit}
-                            invest={this.invest}
-                            locked_balance={this.state.locked_balance}
-                            isReentry={this.state.isReentry}
 
                         /> :
                         null}
@@ -347,6 +356,10 @@ class TopPage extends Component {
                         subContract={this.state.subContract}
                         subtbt={this.state.subtbt}
                         totalUsers={this.state.totalUsers}
+                        contract_status={this.state.contract_status}
+                        HCB={this.state.HCB}
+                        LowerHCB={this.state.LowerHCB}
+                        HigherHCB={this.state.HigherHCB}
                         totalPaid={this.state.totalPaid}
                         total_tbt_sent={this.state.total_tbt_sent}
                         contract_tbt_bal={this.state.contract_tbt_bal}
@@ -356,8 +369,7 @@ class TopPage extends Component {
                         <div>
                             <PersonalStats
 
-                                max_payout={this.state.max_payout}
-                                locked_balance={this.state.locked_balance}
+                                daily_roi={this.state.daily_roi}
                                 user_status={this.state.user_status}
                                 account={this.state.account}
                                 subAccount={this.state.subAccount}
@@ -384,6 +396,7 @@ class TopPage extends Component {
 
                             <LevelStats
 
+                                temp_directs_count={this.state.temp_directs_count}
                                 level1={this.state.level1}
                                 level2={this.state.level2}
                                 level3={this.state.level3}
@@ -395,7 +408,6 @@ class TopPage extends Component {
                                 referrals_count={this.state.referrals_count}
                                 deposit_amount={this.state.deposit_amount}
                                 total_structure={this.state.total_structure}
-
                             />
 
                             <ReferralLink
@@ -403,12 +415,6 @@ class TopPage extends Component {
                             />
                         </div> : null}
 
-                    {this.state.user_status === 0 ?
-                        null : <Withdraw
-                            my_tbt_offer={this.state.my_tbt_offer1}
-                            max_payout={this.state.max_payout}
-                            userroi={this.state.userroi}
-                        />}
 
                     <div style={{ paddingBottom: "20px" }}></div>
 
