@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 const contract_address = 'TRCkjNzmikzmwUKB7dvmrxBF4z6sFBGijX';
 // const tbt_address = 'TJEDMQLLkGC3frpSnEhJes8fTWHPpQ5C6P';
 
-let contract_url = "https://.tronscan.org/#/contract/" + contract_address;
+let contract_url = "https://.tr.org/#/contract/" + contract_address;
 
 export class SmartInfo extends Component {
 
