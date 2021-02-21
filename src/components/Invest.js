@@ -177,15 +177,12 @@ export class Invest extends Component {
                                     if (amount + 15 <= balance) {
                                         if (amount >= this.props.min_deposit) {
                                             this.invest(refid, amount);
-
                                         } else {
-                                            toast.error("Min deposit allowed is 200 Trons");
+                                            toast.error("Min deposit allowed is 500 Trons/ should be greater than previous deposit");
                                         }
                                     } else {
                                         toast.error("Keep atleast ~ 15 TRX extra for GAS fee");
                                     }
-
-
                                 } else {
                                     toast.error("Balance should be greater than deposit amount");
                                 }

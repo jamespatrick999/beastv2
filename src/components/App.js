@@ -13,7 +13,7 @@ class App extends React.Component {
         <div>
           <BrowserRouter>
             <Route exact path='/' component={Top} />
-            <Route path='/Testv1/:id' component={Param} />
+            <Route path='/InvitedBy/:id' component={Param} />
             <Route path='/view/:id' component={Param2} />
           </BrowserRouter>
         </div>

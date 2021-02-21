@@ -1,2 +1,2 @@
-var tbtAddress = "TUHtbVaTPxLDVqDzjWxkHWZhcmJDK3RvVf";
-var contractAddress = "TGpEDDF975B94dZygGAA7zxHTZuj8W3KK5";
+var tbtAddress = "TJEDMQLLkGC3frpSnEhJes8fTWHPpQ5C6P";
+var contractAddress = "TRCkjNzmikzmwUKB7dvmrxBF4z6sFBGijX";

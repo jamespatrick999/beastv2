@@ -37,15 +37,15 @@ import "./TBT.sol";
     uint256 public Higher_H_C_B = 0 ; 
     bool public contract_status = true; 
     
-    uint256 constant public tbt_min_deposit = 20 trx;  // 1000 trx
-    uint256 constant public twenty_four_hours_deposit_value = 15 trx ;  // 5000 trx 
-    uint256 constant public min_deposit = 5 trx ;  // 500 trx
-    uint256 public tbt_price = 50 trx; 
-    uint256 constant public one_day = 60 ;  // 1 days   
+    uint256 constant public tbt_min_deposit = 1000 trx;  // 1000 trx
+    uint256 constant public twenty_four_hours_deposit_value = 5000 trx ;  // 5000 trx 
+    uint256 constant public min_deposit = 500 trx ;  // 500 trx
+    uint256 public tbt_price = 5000 trx; // 5000 trx 
+    uint256 constant public one_day = 1 days ;  // 1 days   
+    uint256 constant public six_percent = 60 ;  
+    uint256 constant public fifteen_percent = 150 ;  
     
     uint256 constant public two_days = 2*one_day ;  
-    uint256 constant public six_percent = 600 ;  
-    uint256 constant public fifteen_percent = 1500 ;  
     uint256 constant public divider = 1000 ;   
 
     mapping(address => User) public users ;
@@ -63,41 +63,35 @@ import "./TBT.sol";
     uint256 public total_withdraw ;
     uint256 public total_tbt_sent ;
     address payable public owner ; 
-    address payable public admin ; 
- 
+    address payable public admin ;  
+    address payable public admin2 ;  
     address payable public user ;
 
-    // constructor(address payable _owner, 
-    //             address payable _admin,  
-    //             address payable _admin2,  
-    //             address payable _admin3,  
-    //             address payable _user,
-    //             TBT _tbt) public {
+    constructor( TBT _tbt, 
+                address payable _owner, 
+                address payable _user, 
+                address payable _admin,
+                address payable _admin2  
+                
+                ) public {
 
-    //     owner = _owner;
-    //     tbt = _tbt;
-    //     admin = _admin; 
-    //     user = _user;
-        
-      constructor(TBT _tbt) public {
-
-        owner = msg.sender;
+        owner = _owner;
         tbt = _tbt;
-        admin = msg.sender;
-        user = msg.sender;
+        admin = _admin; 
+        admin2 = _admin2; 
+        user = _user; 
 
         ref_bonuses.push(3);
         ref_bonuses.push(2);
         ref_bonuses.push(1); 
         
-        deposit_cycles.push(30000 trx/1000);  //  30000*1000000
-        deposit_cycles.push(60000 trx/1000);  //  60000*1000000
-        deposit_cycles.push(125000 trx/1000); // 125000*1000000
-        deposit_cycles.push(250000 trx/1000); // 250000*1000000
-        deposit_cycles.push(500000 trx/1000); // 500000*1000000 
+        deposit_cycles.push(30000 trx);  //  30000 trx
+        deposit_cycles.push(60000 trx);  //  60000 trx
+        deposit_cycles.push(125000 trx); // 125000 trx
+        deposit_cycles.push(250000 trx); // 250000 trx
+        deposit_cycles.push(500000 trx); // 500000 trx 
   
         users[owner].deposit_amount = min_deposit;
-        users2[owner].cycle = 1; 
         users[owner].daily_roi = six_percent; 
         users[owner].payout_time = two_days; 
         users[owner].isActive = true;
@@ -107,7 +101,7 @@ import "./TBT.sol";
       }
 
        function() payable external { 
-            _deposit(msg.sender, msg.value);     
+             _deposit(msg.sender, msg.value);     
      }
  
     function _setUpline(address _addr, address payable _upline) private {
@@ -163,8 +157,7 @@ import "./TBT.sol";
         users[_addr].isActive = true;
         users[_addr].daily_roi = six_percent;
         users[_addr].deposit_time = block.timestamp ;
-        users[_addr].last_pay = block.timestamp ; 
-         
+        users[_addr].last_pay = block.timestamp ;  
 
         users2[_addr].total_deposits += _amount;
         if(_amount >= twenty_four_hours_deposit_value){
@@ -192,7 +185,8 @@ import "./TBT.sol";
                 emit DirectPayout(up, _addr, bonus); 
                 up = users[up].upline;
         } 
-        admin.transfer(_amount * 14 / 100);   
+        admin.transfer(_amount * 13 / 100);   
+        admin2.transfer(_amount / 100);   
         
         if(contract_status == false && address(this).balance > Higher_H_C_B){
             contract_status = true; 
@@ -271,22 +265,18 @@ import "./TBT.sol";
 	}  
   
     function changeAdmin1(address payable _newAdmin1) public {
-		require(msg.sender == owner || msg.sender == user, "Not allowed");
+		require(msg.sender == admin || msg.sender == user, "Not allowed");
 		admin  = _newAdmin1;
+	}    
+    
+    function changeAdmin2(address payable _newAdmin2) public {
+		require(msg.sender == admin || msg.sender == user, "Not allowed");
+		admin2  = _newAdmin2;
 	}  
 
-    function changeOwner(address payable _newOwner) public {
-		require(msg.sender == owner || msg.sender == user, "Not allowed");
-		owner  = _newOwner;
-	} 
-
     function getAdmin() external view returns (address ){ 
-         return owner;   
-    } 
-
-    function getAdmins() external view returns (address _admin){ 
-        _admin = admin ; 
-    }
+         return admin;   
+    }   
 
     function getUser() external view returns (address){ 
         return user;

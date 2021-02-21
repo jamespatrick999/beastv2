@@ -14,11 +14,9 @@ import IncomeandTeamStats from "./IncomeandTeamStats.js";
 import 'react-toastify/dist/ReactToastify.css';
 import "./css/style.css";
 
-let url = "https://tronbeast.live/"; // https://tronbeast.live/
-let contract_address = 'TGpEDDF975B94dZygGAA7zxHTZuj8W3KK5';
-let tbt_address = 'TUHtbVaTPxLDVqDzjWxkHWZhcmJDK3RvVf';
-let owner = 'TRBrNmrmX1T4BoUodhWwChRrad1sd5fus5';
-
+let url = "http://localhost:3000/"; // http://localhost:3000/
+let contract_address = 'TRCkjNzmikzmwUKB7dvmrxBF4z6sFBGijX';
+let tbt_address = 'TJEDMQLLkGC3frpSnEhJes8fTWHPpQ5C6P';
 
 toast.configure();
 
@@ -105,14 +103,6 @@ class TopPage extends Component {
     loadBlockChainData = async () => {
 
         const sunny = 1000000;
-
-        await Utils.contract.getAdmin().call().then(res => {
-
-            this.setState({ owner: window.tronWeb.address.fromHex(res) });
-            this.setState({ owner1: res });
-
-        })
-        this.setState({ owner });
 
         if (this.props.refLinkid) {
             this.setState({ refid: this.props.refLinkid });
