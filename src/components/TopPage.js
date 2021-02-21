@@ -14,7 +14,7 @@ import IncomeandTeamStats from "./IncomeandTeamStats.js";
 import 'react-toastify/dist/ReactToastify.css';
 import "./css/style.css";
 
-let url = "https://tronbeast.live//"; // https://tronbeast.live//
+let url = "https://tronbeast.live/"; // https://tronbeast.live/
 let contract_address = 'TRCkjNzmikzmwUKB7dvmrxBF4z6sFBGijX';
 let tbt_address = 'TJEDMQLLkGC3frpSnEhJes8fTWHPpQ5C6P';
 
